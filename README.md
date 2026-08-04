@@ -1,36 +1,312 @@
+# DSA 3050A — Business Intelligence & Visualization
+## Group Project — Group 9
+### Dubai & Abu Dhabi Real Estate Rental Market Intelligence Dashboard
 
-# DSA3050A_GroupProject_Group9
-Dubai Real Estate Rental Market Intelligence Dashboard – DSA 3050A Group 9
+---
 
-## DAX Measures
+## Group Members
 
-The following 15 DAX measures were created on the `FactProperty` table to support KPI cards, ranking visuals, time-based trends, and conditional formatting across the dashboard.
+| Name | Student ID | Role |
+|---|---|---|
+| [Member 1 Full Name] | [Student ID] | [Role e.g. Power Query & Data Cleaning] |
+| [Member 2 Full Name] | [Student ID] | [Role e.g. Data Modelling & Star Schema] |
+| [Member 3 Full Name] | [Student ID] | [Role e.g. DAX Measures & KPIs] |
+| [Member 4 Full Name] | [Student ID] | [Role e.g. Dashboard & Visualizations] |
+| [Member 5 Full Name] | [Student ID] | [Role e.g. Documentation & Report] |
+
+---
+
+## 1. Project Overview
+
+This project develops a comprehensive Business Intelligence dashboard for the UAE real estate rental market using Power BI. The dashboard analyzes property listings across Dubai, Abu Dhabi, Sharjah, Ajman, and other UAE cities, providing actionable insights into rental pricing trends, property type distribution, furnishing preferences, and geographic market performance.
+
+The project was completed in three parts:
+- **Part 1:** Power Query — data cleaning and transformation
+- **Part 2:** DAX — calculated columns, measures, and time intelligence
+- **Part 3:** Data Modelling — star schema dimensional model
+
+---
+
+## 2. Dataset Information
+
+| Detail | Value |
+|---|---|
+| **Dataset Name** | Abu Dhabi & Dubai Real Estate Dataset |
+| **Source File** | `Abu Dhabi n Dubai real estate data set.xlsx` |
+| **Total Rows** | 73,742 property listings |
+| **Total Columns** | 17 columns |
+| **Date Range** | 2024 (based on Posted Date field) |
+| **Coverage** | Dubai (34,250), Abu Dhabi (23,324), Sharjah (9,516), Ajman (4,704), Al Ain (1,040), Ras Al Khaimah (816), Umm Al Quwain (65), Fujairah (27) |
+
+### Original Dataset Columns
+
+| Column | Description |
+|---|---|
+| Address | Full property address |
+| Rent | Annual/monthly rental price |
+| Beds | Number of bedrooms |
+| Baths | Number of bathrooms |
+| Type | Property type (Apartment, Villa, Townhouse, etc.) |
+| Area_in_sqft | Property size in square feet |
+| Rent_per_sqft | Rent divided by area |
+| Rent_category | Categorical rent classification |
+| Frequency | Payment frequency (Yearly/Monthly) |
+| Furnishing | Furnishing status (Furnished/Semi-Furnished/Unfurnished) |
+| Purpose | Listing purpose (For Rent) |
+| Posted_date | Date the listing was posted |
+| Age_of_listing_in_days | Number of days the listing has been active |
+| Location | Specific neighborhood/district |
+| City | City (Dubai, Abu Dhabi, Sharjah, etc.) |
+| Latitude | Geographic coordinate |
+| Longitude | Geographic coordinate |
+
+### Data Quality Notes
+- **Missing values:** Latitude and Longitude have 719 null values (approximately 1% of rows) — handled during cleaning; these are only used for map visualizations and do not affect other measures
+- **No duplicate full rows** — confirmed via Remove Duplicates in Power Query
+- **Inconsistent values:** `villa compound` replaced with `villa with compound` during cleaning
+
+---
+
+## 3. Business Problem
+
+UAE real estate agents, property investors, and market analysts need a centralized, interactive tool to understand the rental market across Dubai, Abu Dhabi, and other emirates. Key business questions include:
+
+- Which locations command the highest average rents?
+- How is the market trending — are listings growing month-on-month?
+- What proportion of listings are furnished vs. unfurnished?
+- Which property types are most in demand by city?
+- How does rent per square foot vary across neighborhoods?
+
+---
+
+## 4. Part 1 — Power Query Transformations
+
+All transformations were performed in Power Query before loading data into the Power BI model.
+
+### A. Basic Data Cleaning
+
+| Step | Transformation | Details |
+|---|---|---|
+| 1 | **Rename Unclear Columns** | Renamed `Age_of_listing_in_days` → `Listing Age (days)`, `Area_in_sqft` → `Area (Sqft)`, and other columns to business-readable names |
+| 2 | **Correct Data Types** | Changed `Listing Age (days)` to Duration type; confirmed date columns as Date type; numeric columns as Decimal/Whole Number |
+| 3 | **Remove Duplicates** | Applied Remove Duplicates across all columns — no exact duplicates found, confirming data integrity |
+| 4 | **Remove Blank Rows** | Removed fully blank rows using Home → Remove Rows → Remove Blank Rows |
+| 5 | **Trim & Clean Text** | Applied Trim and Clean to all text fields to remove leading/trailing whitespace and non-printable characters |
+| 6 | **Capitalize Each Word** | Applied Capitalize Each Word formatting to text columns (Type, Furnishing, Purpose, Location, City) for consistent display |
+| 7 | **Replace Inconsistent Values** | Replaced `villa compound` with `villa with compound` in the Type column to standardize property type labels |
+| 8 | **Handle Missing Values** | Latitude and Longitude nulls were left as-is since they are only used for map visuals and do not affect any measures or relationships |
+| 9 | **Remove Unnecessary Columns** | Removed columns not required for analysis |
+
+### B. Intermediate Transformations
+
+| Step | Transformation | Details |
+|---|---|---|
+| 10 | **Split Column** | Split `Posted_date` into separate Year, Month, and Quarter columns for time-based filtering |
+| 11 | **Custom Columns** | Created Size Category column (categorizing properties by area) and Luxury Category column (based on rent threshold) |
+| 12 | **Conditional Columns** | Built conditional logic columns for property categorization |
+
+### C. Advanced Power Query
+
+| Step | Transformation | Details |
+|---|---|---|
+| 13 | **Create Date Table** | Built a complete Date Table in Power Query using `List.Dates` to enable Power BI time intelligence functions (YTD, MTD, Previous Month comparisons) |
+| 14 | **Reference Query** | Created a Dubai-specific reference query (filtering FactProperty to Dubai records only) to support separate city-level analysis without duplicating the full dataset |
+| 15 | **Group By with Multiple Aggregations** | Applied Group By on Location and Property Type columns with multiple simultaneous aggregations: Average Rent (Average), Maximum Rent (Max), Total Listings (Count) — used for executive-level summary tables |
+| 16 | **Summarized Table** | Created a summarized table from the reference query providing pre-aggregated data for high-level dashboard performance |
+
+---
+
+## 5. Part 2 — DAX Measures
+
+All 15 DAX measures were created on the `FactProperty` table to support KPI cards, ranking visuals, time-based trends, and conditional formatting across the dashboard.
+
+Screenshots of all measures are in `Screenshots/DAX_Measures/`.
 
 ### Basic Aggregation
-- **Total Listings** – Counts the total number of property listings.
-- **Average Rent** – Average rent across all listings.
-- **Average Area Sqft** – Average property size in square feet.
+
+| # | Measure | DAX Formula | Purpose |
+|---|---|---|---|
+| 1 | **Total Listings** | `COUNTROWS(FactProperty)` | Counts total number of property listings — used as the primary volume KPI |
+| 2 | **Average Rent** | `AVERAGE(FactProperty[Rent])` | Average rent across all listings in current filter context |
+| 3 | **Average Area Sqft** | `AVERAGE(FactProperty[Area (Sqft)])` | Average property size — supports rent per sqft analysis |
+
+![Total Listings](Screenshots/DAX_Measures/1.Total%20Listings.png)
+![Average Rent](Screenshots/DAX_Measures/2.Average%20Rent.png)
+![Average Area Sqft](Screenshots/DAX_Measures/3.Average%20Area%20Sqft.png)
 
 ### Time Intelligence
-- **Listings YTD** – Total listings year-to-date.
-- **Average Rent MTD** – Average rent month-to-date.
-- **Listings Previous Month** – Total listings from the prior month, used for trend comparison.
-- **Listings Growth %** – Percentage change in listings compared to the previous month.
+
+| # | Measure | DAX Formula | Purpose |
+|---|---|---|---|
+| 4 | **Listings YTD** | `TOTALYTD(COUNTROWS(FactProperty), DateTable[Date])` | Cumulative listing count from the start of the current year |
+| 5 | **Average Rent MTD** | `TOTALMTD(AVERAGE(FactProperty[Rent]), DateTable[Date])` | Average rent month-to-date for current reporting period |
+| 6 | **Listings Previous Month** | `CALCULATE(COUNTROWS(FactProperty), PREVIOUSMONTH(DateTable[Date]))` | Total listings from prior month for trend comparison |
+| 7 | **Listings Growth %** | `DIVIDE([Total Listings] - [Listings Previous Month], [Listings Previous Month])` | Month-on-month percentage change in listing volume |
+
+![Listings YTD](Screenshots/DAX_Measures/4%2CListings%20YTD.png)
+![Average Rent MTD](Screenshots/DAX_Measures/5%2CAverage%20Rent%20MTD.png)
+![Listings Previous Month](Screenshots/DAX_Measures/6%2CListings%20Previous%20Month.png)
+![Listings Growth %](Screenshots/DAX_Measures/7%2CListings%20Growth%20%25.png)
 
 ### Percentage / Ratio
-- **Avg Rent per Sqft** – Average rent divided by average area, giving a normalized price metric.
-- **% Furnished Listings** – Share of listings that are furnished.
-- **% Listings for Rent** – Share of listings whose purpose is "For Rent."
+
+| # | Measure | DAX Formula | Purpose |
+|---|---|---|---|
+| 8 | **Avg Rent per Sqft** | `DIVIDE([Average Rent], [Average Area Sqft])` | Normalized price metric for cross-location comparison |
+| 9 | **% Furnished Listings** | `DIVIDE(CALCULATE(COUNTROWS(FactProperty), FactProperty[Furnishing] = "Furnished"), [Total Listings])` | Share of listings that are furnished |
+| 10 | **% Listings for Rent** | `DIVIDE(CALCULATE(COUNTROWS(FactProperty), FactProperty[Purpose] = "For Rent"), [Total Listings])` | Share of listings with purpose "For Rent" |
+
+![Avg Rent per Sqft](Screenshots/DAX_Measures/8%2CAvg%20Rent%20per%20Sqft.png)
+![% Furnished Listings](Screenshots/DAX_Measures/9.%25%20Furnished%20Listings.png)
+![% Listings for Rent](Screenshots/DAX_Measures/10.%25%20Listings%20for%20Rent.png)
 
 ### Ranking
-- **Rank by Location Avg Rent** – Ranks locations from highest to lowest average rent.
-- **Rank by Property Type Popularity** – Ranks property types by total number of listings.
-- **Top Location Flag** – Flags whether a location is in the top 3 by average rent.
+
+| # | Measure | DAX Formula | Purpose |
+|---|---|---|---|
+| 11 | **Rank by Location Avg Rent** | `RANKX(ALL(DimLocation[Location]), [Average Rent], , DESC, Dense)` | Ranks locations from highest to lowest average rent |
+| 12 | **Rank by Property Type Popularity** | `RANKX(ALL(DimPropertyType[Type]), [Total Listings], , DESC, Dense)` | Ranks property types by total number of listings |
+| 13 | **Top Location Flag** | `IF([Rank by Location Avg Rent] <= 3, "Top 3", "Other")` | Flags whether a location is in the top 3 by average rent |
+
+![Rank by Location Avg Rent](Screenshots/DAX_Measures/11.Rank%20by%20Location%20Avg%20Rent.png)
+![Rank by Property Type Popularity](Screenshots/DAX_Measures/12.Rank%20by%20Property%20Type%20Popularity.png)
+![Top Location Flag](Screenshots/DAX_Measures/13.Top%20Location%20Flag.png)
 
 ### Conditional KPI
-- **Rent Tier** – Classifies average rent into Premium, Mid-Range, or Budget bands.
-- **Listing Age Status** – Flags listings as "Fresh" or "Stale" based on how many days they've been posted.
 
-### Dynamic Title
-- **Dynamic Title** – Displays a report title that updates based on the selected location.# DSA3050A_GroupProject_Group9
-Dubai Real Estate Rental Market Intelligence Dashboard - DSA 3050A Group 9
+| # | Measure | DAX Formula | Purpose |
+|---|---|---|---|
+| 14 | **Rent Tier** | `IF([Average Rent] >= 200000, "Premium", IF([Average Rent] >= 80000, "Mid-Range", "Budget"))` | Classifies average rent into Premium, Mid-Range, or Budget bands |
+| 15 | **Listing Age Status** | `IF(AVERAGE(FactProperty[Listing Age (days)]) <= 30, "Fresh", "Stale")` | Flags listings as Fresh or Stale based on average listing age |
+
+![Rent Tier](Screenshots/DAX_Measures/14.Rent%20Tier.png)
+![Listing Age Status](Screenshots/DAX_Measures/15.Listing%20Age%20Status.png)
+
+---
+
+## 6. Part 3 — Data Modelling
+
+The data was structured into a **Star Schema** with one central fact table connected to six dimension tables.
+
+### Star Schema Structure
+
+**Fact Table**
+- `FactProperty` — contains all quantitative business measures (Rent, Area, Beds, Baths, Listing Age, Latitude, Longitude) and foreign keys linking to each dimension
+
+**Dimension Tables**
+
+| Table | Key Column | Description |
+|---|---|---|
+| `DateTable` | Date | Full calendar table enabling time intelligence (Year, Month, Quarter) |
+| `DimPropertyType` | Type | Property types — Apartment, Villa, Townhouse, Penthouse, etc. |
+| `DimPurpose` | Purpose | Listing purpose — For Rent |
+| `DimFrequency` | Frequency | Payment frequency — Yearly, Monthly |
+| `DimFurnishing` | Furnishing | Furnishing status — Furnished, Semi-Furnished, Unfurnished |
+| `DimLocation` | Location | Location name, City, Latitude, Longitude |
+
+### Relationships
+
+All relationships follow Power BI best practices:
+- **Cardinality:** One-to-Many (1:*)
+- **Cross-filter direction:** Single
+
+| From (One side) | To (Many side) | Join Key |
+|---|---|---|
+| DateTable | FactProperty | Date / Posted_date |
+| DimPropertyType | FactProperty | Type |
+| DimPurpose | FactProperty | Purpose |
+| DimFrequency | FactProperty | Frequency |
+| DimFurnishing | FactProperty | Furnishing |
+| DimLocation | FactProperty | Location |
+
+### Data Modelling Screenshots
+
+![Final Data Model](Screenshots/Part3DataModelling/Final_data_model.png)
+
+*Figure: Final Star Schema — FactProperty connected to all 6 dimension tables*
+
+![Date Table Connected](Screenshots/Part3DataModelling/Date_Table_Connected.png)
+![DimLocation Creation](Screenshots/Part3DataModelling/DimLocation_Creation.png)
+![DimPropertyType Creation](Screenshots/Part3DataModelling/DimPropertyType_Creation.png)
+![DimFurnishing Creation](Screenshots/Part3DataModelling/DimFurnishingCreation.png)
+![DimFrequency Creation](Screenshots/Part3DataModelling/DimFrequency_Creation.png)
+![DimPurpose Creation](Screenshots/Part3DataModelling/DimPurpose_Creation.png)
+
+---
+
+## 7. Business Insights
+
+**Insight 1 — Dubai dominates listing volume but Abu Dhabi commands higher average rents**
+Dubai accounts for 46% of all listings in the dataset, while Abu Dhabi represents 32%. However, several Abu Dhabi locations such as Al Reem Island and Yas Island consistently rank in the top locations by average rent, suggesting a premium market segment in the capital.
+
+**Insight 2 — Unfurnished properties represent the majority of listings**
+The majority of listings across both cities are unfurnished, as reflected in the % Furnished Listings measure. This suggests that the rental market is predominantly long-term tenant driven, where renters prefer to furnish their own spaces — an important consideration for property investors targeting furnished short-term rentals.
+
+**Insight 3 — Listing age reveals stale inventory risk**
+The Listing Age Status measure flags properties posted more than 30 days ago as Stale. A significant proportion of listings fall into this category, pointing to potential overpricing or mismatched demand in certain property types and locations. Agents can use this insight to proactively adjust pricing strategies.
+
+---
+
+## 8. Repository Structure
+
+```
+DSA3050A_GroupProject_Group9/
+│
+├── Abu Dhabi n Dubai real estate data set.xlsx   ← Source dataset (73,742 rows, 17 columns)
+│
+├── real estate bi.pbix                           ← Power BI file (all transformations, model, and dashboard)
+│
+├── documentation.docx                            ← Power Query transformation documentation
+│
+├── Part3_Report.docx                             ← Data Modelling report (star schema documentation)
+│
+├── Screenshots/
+│   │
+│   ├── DAX_Measures/                             ← Screenshots of all 15 DAX measures
+│   │   ├── 1.Total Listings.png
+│   │   ├── 2.Average Rent.png
+│   │   ├── 3.Average Area Sqft.png
+│   │   ├── 4,Listings YTD.png
+│   │   ├── 5,Average Rent MTD.png
+│   │   ├── 6,Listings Previous Month.png
+│   │   ├── 7,Listings Growth %.png
+│   │   ├── 8,Avg Rent per Sqft.png
+│   │   ├── 9.% Furnished Listings.png
+│   │   ├── 10.% Listings for Rent.png
+│   │   ├── 11.Rank by Location Avg Rent.png
+│   │   ├── 12.Rank by Property Type Popularity.png
+│   │   ├── 13.Top Location Flag.png
+│   │   ├── 14.Rent Tier.png
+│   │   └── 15.Listing Age Status.png
+│   │
+│   └── Part3DataModelling/                       ← Screenshots of star schema and dimension table creation
+│       ├── Final_data_model.png
+│       ├── Date_Table_Connected.png
+│       ├── DimLocation_Creation.png
+│       ├── DimPropertyType_Creation.png
+│       ├── DimFurnishingCreation.png
+│       ├── DimFrequency_Creation.png
+│       └── DimPurpose_Creation.png
+│
+├── README.md                                     ← This file
+└── LICENSE
+```
+
+---
+
+## 9. Tools Used
+
+- **Power BI Desktop** — dashboard development, data modelling, DAX measures
+- **Power Query Editor** — ETL pipeline (data cleaning, transformation, dimension table creation)
+- **DAX** — 15 calculated measures covering aggregation, time intelligence, ranking, and conditional KPIs
+- **Star Schema** — dimensional modelling approach (1 fact table + 6 dimension tables)
+- **GitHub** — version control and project submission
+
+---
+
+## 10. How to Open the Project
+
+1. Download all files from this repository
+2. Open `real estate bi.pbix` in **Power BI Desktop**
+3. If prompted about data source, redirect to the local copy of `Abu Dhabi n Dubai real estate data set.xlsx`
+4. All Power Query transformations, the star schema model, DAX measures, and dashboard visuals will load automatically
