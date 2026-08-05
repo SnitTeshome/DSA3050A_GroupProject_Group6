@@ -40,11 +40,8 @@ Real Estate Goldmine – Dubai UAE Rental Market
 
 **Original Source**
 
-https://www.kaggle.com/datasets/azharsaleem/real-estate-goldmine-dubai-uae-rental-market
+ Kaggle: https://www.kaggle.com/datasets/azharsaleem/real-estate-goldmine-dubai-uae-rental-market
 
-**Data Provider**
-
-Kaggle
 
 ---
 
@@ -82,6 +79,14 @@ The dataset contains **73,743 residential rental property listings** with **17 a
 | Latitude | Geographic latitude |
 | Longitude | Geographic longitude |
 
+
+---
+### Data Quality Notes
+- **Missing values:** Latitude and Longitude have 719 null values (approximately 1% of rows)  handled during cleaning; these are only used for map visualizations and do not affect other measures
+- **No duplicate full rows**  confirmed via Remove Duplicates in Power Query
+- **Inconsistent values:** `villa compound` replaced with `villa with compound` during cleaning
+
+---
 ### Data Modelling Approach
 
 The original dataset consisted of a single table. During data preparation, the dataset was transformed into a **Star Schema** by creating dimension tables for:
@@ -94,14 +99,6 @@ The original dataset consisted of a single table. During data preparation, the d
 - Purpose
 
 These dimension tables were linked to the central **FactProperty** table to improve query performance, simplify analysis, and support interactive reporting in Power BI.
-
----
-### Data Quality Notes
-- **Missing values:** Latitude and Longitude have 719 null values (approximately 1% of rows)  handled during cleaning; these are only used for map visualizations and do not affect other measures
-- **No duplicate full rows**  confirmed via Remove Duplicates in Power Query
-- **Inconsistent values:** `villa compound` replaced with `villa with compound` during cleaning
-
----
 
 ## 3. Business Problem
 
