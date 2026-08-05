@@ -234,7 +234,43 @@ All relationships follow Power BI best practices:
 
 ---
 
-## 7. Business Insights
+## 7. Part 4 — Dashboard Design and Visuals
+
+The dashboard was built as a 5-page Power BI report using a consistent purple executive theme, KPI cards, slicers, and a drill-through page, in line with the advanced visuals required by the project brief.
+
+### Page 1 — Executive Summary
+
+![Executive Summary](Screenshots/Dashboard_Pages/01_Executive_Summary.png)
+
+High-level KPI cards (Average Rent, Total Portfolio Value, Average Rent per Sqft) sit alongside a bar chart of Total Portfolio Value by City, a table of portfolio value by property type, a treemap of portfolio value by type, and a pie chart of listings by Rent category.
+
+### Page 2 — Trend Analysis
+
+![Trend Analysis](Screenshots/Dashboard_Pages/02_Trend_Analysis.png)
+
+Tracks Total Listings and Average Rent over time by Posted Date, and Average Rent by Year from 2018–2024, with a Listings Growth % KPI card and Location/Year slicers for interactive filtering.
+
+### Page 3 — Geographic & Segment Analysis
+
+![Geographic and Segment Analysis](Screenshots/Dashboard_Pages/03_Geographic_Segment_Analysis.png)
+
+Combines a scatter plot of Total Listings by Type, Area (sqft), and Rent with a map visual plotting listings by Latitude, Longitude, and Location across the UAE, filterable by Property type (Budget/Luxury/Premium) and Furnishing.
+
+### Page 4 — Property Drill-Through Page
+
+![Property Drill Through Page](Screenshots/Dashboard_Pages/04_Property_Drill_Through.png)
+
+A detailed property-level table (Address, City, Type, Beds, Area) with a Listing Age Status card, a Rank by Property Type Popularity card, and a Key Influencers visual showing what drives Average Rent up or down (e.g. Type = Apartment, Furnishing = Unfurnished).
+
+### Page 5 — Property and Furnishing Insights
+
+![Property and Furnishing Insights](Screenshots/Dashboard_Pages/05_Property_Furnishing_Insights.png)
+
+A treemap of Total Listings by Property type (Standard/Budget/Premium/Luxury) alongside a scatter plot of Furnishing, Area (sqft), and Rent, with slicers for Rent category, Property type, Type, and Property Size Category.
+
+---
+
+## 8. Business Insights
 
 **Insight 1 — Dubai dominates listing volume but Abu Dhabi commands higher average rents**
 Dubai accounts for 46% of all listings in the dataset, while Abu Dhabi represents 32%. However, several Abu Dhabi locations such as Al Reem Island and Yas Island consistently rank in the top locations by average rent, suggesting a premium market segment in the capital.
@@ -247,7 +283,7 @@ The Listing Age Status measure flags properties posted more than 30 days ago as 
 
 ---
 
-## 8. Repository Structure
+## 9. Repository Structure
 
 ```
 DSA3050A_GroupProject_Group9/
@@ -279,14 +315,26 @@ DSA3050A_GroupProject_Group9/
 │   │   ├── 14.Rent Tier.png
 │   │   └── 15.Listing Age Status.png
 │   │
-│   └── Part3DataModelling/                       ← Screenshots of star schema and dimension table creation
-│       ├── Final_data_model.png
-│       ├── Date_Table_Connected.png
-│       ├── DimLocation_Creation.png
-│       ├── DimPropertyType_Creation.png
-│       ├── DimFurnishingCreation.png
-│       ├── DimFrequency_Creation.png
-│       └── DimPurpose_Creation.png
+│   ├── Part3DataModelling/                       ← Screenshots of star schema and dimension table creation
+│   │   ├── Final_data_model.png
+│   │   ├── Date_Table_Connected.png
+│   │   ├── DimLocation_Creation.png
+│   │   ├── DimPropertyType_Creation.png
+│   │   ├── DimFurnishingCreation.png
+│   │   ├── DimFrequency_Creation.png
+│   │   └── DimPurpose_Creation.png
+│   │
+│   └── Dashboard_Pages/                          ← Screenshots of all 5 dashboard pages
+│       ├── 01_Executive_Summary.png
+│       ├── 02_Trend_Analysis.png
+│       ├── 03_Geographic_Segment_Analysis.png
+│       ├── 04_Property_Drill_Through.png
+│       └── 05_Property_Furnishing_Insights.png
+│
+├── Documentation/
+│   ├── Project_Report.docx
+│   ├── Data_Dictionary.docx
+│   └── Presentation.pptx
 │
 ├── README.md                                     ← This file
 └── LICENSE
@@ -294,7 +342,7 @@ DSA3050A_GroupProject_Group9/
 
 ---
 
-## 9. Tools Used
+## 10. Tools Used
 
 - **Power BI Desktop** — dashboard development, data modelling, DAX measures
 - **Power Query Editor** — ETL pipeline (data cleaning, transformation, dimension table creation)
@@ -304,7 +352,7 @@ DSA3050A_GroupProject_Group9/
 
 ---
 
-## 10. How to Open the Project
+## 11. How to Open the Project
 
 1. Download all files from this repository
 2. Open `real estate bi.pbix` in **Power BI Desktop**
