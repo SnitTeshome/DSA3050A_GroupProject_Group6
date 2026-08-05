@@ -21,9 +21,9 @@
 This project develops a comprehensive Business Intelligence dashboard for the UAE real estate rental market using Power BI. The dashboard analyzes property listings across Dubai, Abu Dhabi, Sharjah, Ajman, and other UAE cities, providing actionable insights into rental pricing trends, property type distribution, furnishing preferences, and geographic market performance.
 
 The project was completed in three parts:
-- **Part 1:** Power Query — data cleaning and transformation
-- **Part 2:** DAX — calculated columns, measures, and time intelligence
-- **Part 3:** Data Modelling — star schema dimensional model
+- **Part 1:** Power Query- data cleaning and transformation
+- **Part 2:** DAX  calculated columns, measures, and time intelligence
+- **Part 3:** Data Modelling  star schema dimensional model
 - **Part 4:** Dashboard and visualization
  - **Part 5:** Insight and Report
 ---
@@ -62,8 +62,8 @@ The project was completed in three parts:
 | Longitude | Geographic coordinate |
 
 ### Data Quality Notes
-- **Missing values:** Latitude and Longitude have 719 null values (approximately 1% of rows) — handled during cleaning; these are only used for map visualizations and do not affect other measures
-- **No duplicate full rows** — confirmed via Remove Duplicates in Power Query
+- **Missing values:** Latitude and Longitude have 719 null values (approximately 1% of rows)  handled during cleaning; these are only used for map visualizations and do not affect other measures
+- **No duplicate full rows**  confirmed via Remove Duplicates in Power Query
 - **Inconsistent values:** `villa compound` replaced with `villa with compound` during cleaning
 
 ---
@@ -73,14 +73,14 @@ The project was completed in three parts:
 UAE real estate agents, property investors, and market analysts need a centralized, interactive tool to understand the rental market across Dubai, Abu Dhabi, and other emirates. Key business questions include:
 
 - Which locations command the highest average rents?
-- How is the market trending — are listings growing month-on-month?
+- How is the market trending  are listings growing month-on-month?
 - What proportion of listings are furnished vs. unfurnished?
 - Which property types are most in demand by city?
 - How does rent per square foot vary across neighborhoods?
 
 ---
 
-## 4. Part 1 — Power Query Transformations
+## 4. Part 1  Power Query Transformations
 
 All transformations were performed in Power Query before loading data into the Power BI model.
 
@@ -90,7 +90,7 @@ All transformations were performed in Power Query before loading data into the P
 |---|---|---|
 | 1 | **Rename Unclear Columns** | Renamed `Age_of_listing_in_days` → `Listing Age (days)`, `Area_in_sqft` → `Area (Sqft)`, and other columns to business-readable names |
 | 2 | **Correct Data Types** | Changed `Listing Age (days)` to Duration type; confirmed date columns as Date type; numeric columns as Decimal/Whole Number |
-| 3 | **Remove Duplicates** | Applied Remove Duplicates across all columns — no exact duplicates found, confirming data integrity |
+| 3 | **Remove Duplicates** | Applied Remove Duplicates across all columns  no exact duplicates found, confirming data integrity |
 | 4 | **Remove Blank Rows** | Removed fully blank rows using Home → Remove Rows → Remove Blank Rows |
 | 5 | **Trim & Clean Text** | Applied Trim and Clean to all text fields to remove leading/trailing whitespace and non-printable characters |
 | 6 | **Capitalize Each Word** | Applied Capitalize Each Word formatting to text columns (Type, Furnishing, Purpose, Location, City) for consistent display |
@@ -112,12 +112,12 @@ All transformations were performed in Power Query before loading data into the P
 |---|---|---|
 | 13 | **Create Date Table** | Built a complete Date Table in Power Query using `List.Dates` to enable Power BI time intelligence functions (YTD, MTD, Previous Month comparisons) |
 | 14 | **Reference Query** | Created a Dubai-specific reference query (filtering FactProperty to Dubai records only) to support separate city-level analysis without duplicating the full dataset |
-| 15 | **Group By with Multiple Aggregations** | Applied Group By on Location and Property Type columns with multiple simultaneous aggregations: Average Rent (Average), Maximum Rent (Max), Total Listings (Count) — used for executive-level summary tables |
+| 15 | **Group By with Multiple Aggregations** | Applied Group By on Location and Property Type columns with multiple simultaneous aggregations: Average Rent (Average), Maximum Rent (Max), Total Listings (Count)  used for executive-level summary tables |
 | 16 | **Summarized Table** | Created a summarized table from the reference query providing pre-aggregated data for high-level dashboard performance |
 
 ---
 
-## 5. Part 2 — DAX Measures
+## 5. Part 2  DAX Measures
 
 All 15 DAX measures were created on the `FactProperty` table to support KPI cards, ranking visuals, time-based trends, and conditional formatting across the dashboard.
 
@@ -127,9 +127,9 @@ Screenshots of all measures are in `Screenshots/DAX_Measures/`.
 
 | # | Measure | DAX Formula | Purpose |
 |---|---|---|---|
-| 1 | **Total Listings** | `COUNTROWS(FactProperty)` | Counts total number of property listings — used as the primary volume KPI |
+| 1 | **Total Listings** | `COUNTROWS(FactProperty)` | Counts total number of property listings  used as the primary volume KPI |
 | 2 | **Average Rent** | `AVERAGE(FactProperty[Rent])` | Average rent across all listings in current filter context |
-| 3 | **Average Area Sqft** | `AVERAGE(FactProperty[Area (Sqft)])` | Average property size — supports rent per sqft analysis |
+| 3 | **Average Area Sqft** | `AVERAGE(FactProperty[Area (Sqft)])` | Average property size  supports rent per sqft analysis |
 
 ![Total Listings](Screenshots/DAX_Measures/1.Total%20Listings.png)
 ![Average Rent](Screenshots/DAX_Measures/2.Average%20Rent.png)
@@ -185,24 +185,24 @@ Screenshots of all measures are in `Screenshots/DAX_Measures/`.
 
 ---
 
-## 6. Part 3 — Data Modelling
+## 6. Part 3  Data Modelling
 
 The data was structured into a **Star Schema** with one central fact table connected to six dimension tables.
 
 ### Star Schema Structure
 
 **Fact Table**
-- `FactProperty` — contains all quantitative business measures (Rent, Area, Beds, Baths, Listing Age, Latitude, Longitude) and foreign keys linking to each dimension
+- `FactProperty`  contains all quantitative business measures (Rent, Area, Beds, Baths, Listing Age, Latitude, Longitude) and foreign keys linking to each dimension
 
 **Dimension Tables**
 
 | Table | Key Column | Description |
 |---|---|---|
 | `DateTable` | Date | Full calendar table enabling time intelligence (Year, Month, Quarter) |
-| `DimPropertyType` | Type | Property types — Apartment, Villa, Townhouse, Penthouse, etc. |
-| `DimPurpose` | Purpose | Listing purpose — For Rent |
-| `DimFrequency` | Frequency | Payment frequency — Yearly, Monthly |
-| `DimFurnishing` | Furnishing | Furnishing status — Furnished, Semi-Furnished, Unfurnished |
+| `DimPropertyType` | Type | Property types  Apartment, Villa, Townhouse, Penthouse, etc. |
+| `DimPurpose` | Purpose | Listing purpose  For Rent |
+| `DimFrequency` | Frequency | Payment frequency  Yearly, Monthly |
+| `DimFurnishing` | Furnishing | Furnishing status  Furnished, Semi-Furnished, Unfurnished |
 | `DimLocation` | Location | Location name, City, Latitude, Longitude |
 
 ### Relationships
@@ -224,7 +224,7 @@ All relationships follow Power BI best practices:
 
 ![Final Data Model](Screenshots/Part3DataModelling/Final_data_model.png)
 
-*Figure: Final Star Schema — FactProperty connected to all 6 dimension tables*
+*Figure: Final Star Schema  FactProperty connected to all 6 dimension tables*
 
 ![Date Table Connected](Screenshots/Part3DataModelling/Date_Table_Connected.png)
 ![DimLocation Creation](Screenshots/Part3DataModelling/DimLocation_Creation.png)
@@ -235,35 +235,35 @@ All relationships follow Power BI best practices:
 
 ---
 
-## 7. Part 4 — Dashboard Design and Visuals
+## 7. Part 4  Dashboard Design and Visuals
 
 The dashboard was built as a 5-page Power BI report using a consistent purple executive theme, KPI cards, slicers, and a drill-through page, in line with the advanced visuals required by the project brief.
 
-### Page 1 — Executive Summary
+### Page 1  Executive Summary
 
 ![Executive Summary](Screenshots/Dashboard_Pages/01_Executive_Summary.png)
 
 High-level KPI cards (Average Rent, Total Portfolio Value, Average Rent per Sqft) sit alongside a bar chart of Total Portfolio Value by City, a table of portfolio value by property type, a treemap of portfolio value by type, and a pie chart of listings by Rent category.
 
-### Page 2 — Trend Analysis
+### Page 2  Trend Analysis
 
 ![Trend Analysis](Screenshots/Dashboard_Pages/02_Trend_Analysis.png)
 
 Tracks Total Listings and Average Rent over time by Posted Date, and Average Rent by Year from 2018–2024, with a Listings Growth % KPI card and Location/Year slicers for interactive filtering.
 
-### Page 3 — Geographic & Segment Analysis
+### Page 3  Geographic & Segment Analysis
 
 ![Geographic and Segment Analysis](Screenshots/Dashboard_Pages/03_Geographic_Segment_Analysis.png)
 
 Combines a scatter plot of Total Listings by Type, Area (sqft), and Rent with a map visual plotting listings by Latitude, Longitude, and Location across the UAE, filterable by Property type (Budget/Luxury/Premium) and Furnishing.
 
-### Page 4 — Property Drill-Through Page
+### Page 4  Property Drill-Through Page
 
 ![Property Drill Through Page](Screenshots/Dashboard_Pages/04_Property_Drill_Through.png)
 
 A detailed property-level table (Address, City, Type, Beds, Area) with a Listing Age Status card, a Rank by Property Type Popularity card, and a Key Influencers visual showing what drives Average Rent up or down (e.g. Type = Apartment, Furnishing = Unfurnished).
 
-### Page 5 — Property and Furnishing Insights
+### Page 5  Property and Furnishing Insights
 
 ![Property and Furnishing Insights](Screenshots/Dashboard_Pages/05_Property_Furnishing_Insights.png)
 
@@ -273,13 +273,13 @@ A treemap of Total Listings by Property type (Standard/Budget/Premium/Luxury) al
 
 ## 8. Business Insights
 
-**Insight 1 — Dubai dominates listing volume but Abu Dhabi commands higher average rents**
+**Insight 1  Dubai dominates listing volume but Abu Dhabi commands higher average rents**
 Dubai accounts for 46% of all listings in the dataset, while Abu Dhabi represents 32%. However, several Abu Dhabi locations such as Al Reem Island and Yas Island consistently rank in the top locations by average rent, suggesting a premium market segment in the capital.
 
-**Insight 2 — Unfurnished properties represent the majority of listings**
-The majority of listings across both cities are unfurnished, as reflected in the % Furnished Listings measure. This suggests that the rental market is predominantly long-term tenant driven, where renters prefer to furnish their own spaces — an important consideration for property investors targeting furnished short-term rentals.
+**Insight 2  Unfurnished properties represent the majority of listings**
+The majority of listings across both cities are unfurnished, as reflected in the % Furnished Listings measure. This suggests that the rental market is predominantly long-term tenant driven, where renters prefer to furnish their own spaces  an important consideration for property investors targeting furnished short-term rentals.
 
-**Insight 3 — Listing age reveals stale inventory risk**
+**Insight 3  Listing age reveals stale inventory risk**
 The Listing Age Status measure flags properties posted more than 30 days ago as Stale. A significant proportion of listings fall into this category, pointing to potential overpricing or mismatched demand in certain property types and locations. Agents can use this insight to proactively adjust pricing strategies.
 
 ---
@@ -345,11 +345,11 @@ DSA3050A_GroupProject_Group9/
 
 ## 10. Tools Used
 
-- **Power BI Desktop** — dashboard development, data modelling, DAX measures
-- **Power Query Editor** — ETL pipeline (data cleaning, transformation, dimension table creation)
-- **DAX** — 15 calculated measures covering aggregation, time intelligence, ranking, and conditional KPIs
-- **Star Schema** — dimensional modelling approach (1 fact table + 6 dimension tables)
-- **GitHub** — version control and project submission
+- **Power BI Desktop**  dashboard development, data modelling, DAX measures
+- **Power Query Editor**  ETL pipeline (data cleaning, transformation, dimension table creation)
+- **DAX**  15 calculated measures covering aggregation, time intelligence, ranking, and conditional KPIs
+- **Star Schema**  dimensional modelling approach (1 fact table + 6 dimension tables)
+- **GitHub**  version control and project submission
 
 ---
 
