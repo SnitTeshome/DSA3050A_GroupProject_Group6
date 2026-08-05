@@ -36,11 +36,11 @@ The dataset used in this project was obtained from Kaggle and contains rental pr
 
 **Dataset Name**
 
-Real Estate Goldmine – Dubai UAE Rental Market
+- Real Estate Goldmine – Dubai UAE Rental Market
 
 **Original Source**
 
- Kaggle: https://www.kaggle.com/datasets/azharsaleem/real-estate-goldmine-dubai-uae-rental-market
+ - Kaggle: https://www.kaggle.com/datasets/azharsaleem/real-estate-goldmine-dubai-uae-rental-market
 
 
 ---
