@@ -8,7 +8,7 @@
 
 | Name | Student ID | Role |
 |---|---|---|
-| [Member 1 Full Name] | [Student ID] | [Role e.g. Power Query & Data Cleaning] |
+| [WIlson Jnr Muhia] | [669024] | [Importation of data, Power query, data cleaning] |
 | [Member 2 Full Name] | [Student ID] | [Role e.g. Data Modelling & Star Schema] |
 | [Member 3 Full Name] | [Student ID] | [Role e.g. DAX Measures & KPIs] |
 | [Member 4 Full Name] | [Student ID] | [Role e.g. Dashboard & Visualizations] |
