@@ -1,5 +1,5 @@
-# DSA 3050A — Business Intelligence & Visualization
-## Group Project — Group 9
+# DSA 3050A - Business Intelligence & Visualization
+## Group Project - Group 6
 ### Dubai & Abu Dhabi Real Estate Rental Market Intelligence Dashboard
 
 ---
@@ -8,13 +8,13 @@
 
 | Name | Student ID | Role |
 |---|---|---|
-| WIlson Jnr Muhia | 669024 | Importation of data, Power query, data cleaning |
-| [Member 2 Full Name] | [Student ID] | [Role e.g. Data Modelling & Star Schema] |
-| [Member 3 Full Name] | [Student ID] | [Role e.g. DAX Measures & KPIs] |
-| [Member 4 Full Name] | [Student ID] | [Role e.g. Dashboard & Visualizations] |
-| [Member 5 Full Name] | [Student ID] | [Role e.g. Documentation & Report] |
+| Wilson Jnr Muhia | 669024 | Importation of data, Power Query, data cleaning |
+| Hana Gashaw | 670555 | Data Modelling & Star Schema |
+| Merhawit Kassa | 670554 | DAX Measures & KPIs |
+| Cynthia Gathogo | 668745 | Dashboard & Visualizations |
+| Snit Kahsay | 670552 | Business Understanding, GitHub Repository Management & README Documentation |
+| Betelhem Kebede | 670549 | Report Writing, Business Insights & Presentation |
 
----
 
 ## 1. Project Overview
 
@@ -24,7 +24,8 @@ The project was completed in three parts:
 - **Part 1:** Power Query — data cleaning and transformation
 - **Part 2:** DAX — calculated columns, measures, and time intelligence
 - **Part 3:** Data Modelling — star schema dimensional model
-
+- **Part 4:** Dashboard and visualization
+ - **Part 4:** Insight and Report
 ---
 
 ## 2. Dataset Information
