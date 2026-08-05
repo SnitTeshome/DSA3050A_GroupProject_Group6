@@ -25,7 +25,7 @@ The project was completed in three parts:
 - **Part 2:** DAX — calculated columns, measures, and time intelligence
 - **Part 3:** Data Modelling — star schema dimensional model
 - **Part 4:** Dashboard and visualization
- - **Part 4:** Insight and Report
+ - **Part 5:** Insight and Report
 ---
 
 ## 2. Dataset Information
