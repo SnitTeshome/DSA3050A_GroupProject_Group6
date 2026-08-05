@@ -21,9 +21,9 @@
 This project develops a comprehensive Business Intelligence dashboard for the UAE real estate rental market using Power BI. The dashboard analyzes property listings across Dubai, Abu Dhabi, Sharjah, Ajman, and other UAE cities, providing actionable insights into rental pricing trends, property type distribution, furnishing preferences, and geographic market performance.
 
 The project was completed in three parts:
-- **Part 1:** Power Query- data cleaning and transformation
-- **Part 2:** DAX  calculated columns, measures, and time intelligence
-- **Part 3:** Data Modelling  star schema dimensional model
+- **Part 1:** Power Query: data cleaning and transformation
+- **Part 2:** DAX: calculated columns, measures, and time intelligence
+- **Part 3:** Data Modelling:  star schema dimensional model
 - **Part 4:** Dashboard and visualization
  - **Part 5:** Insight and Report
 ---
