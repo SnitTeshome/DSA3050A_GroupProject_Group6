@@ -179,6 +179,7 @@ Screenshots of all measures are in `Screenshots/DAX_Measures/`.
 ![Listings YTD](Screenshots/DAX_Measures/4%2CListings%20YTD.png)
 ![Average Rent MTD](Screenshots/DAX_Measures/5%2CAverage%20Rent%20MTD.png)
 ![Listings Previous Month](Screenshots/DAX_Measures/6%2CListings%20Previous%20Month.png)
+
 ![Listings Growth %](Screenshots/DAX_Measures/7%2CListings%20Growth%20%25.png)
 
 ### Percentage / Ratio
@@ -190,7 +191,9 @@ Screenshots of all measures are in `Screenshots/DAX_Measures/`.
 | 10 | **% Listings for Rent** | `DIVIDE(CALCULATE(COUNTROWS(FactProperty), FactProperty[Purpose] = "For Rent"), [Total Listings])` | Share of listings with purpose "For Rent" |
 
 ![Avg Rent per Sqft](Screenshots/DAX_Measures/8%2CAvg%20Rent%20per%20Sqft.png)
+
 ![% Furnished Listings](Screenshots/DAX_Measures/9.%25%20Furnished%20Listings.png)
+
 ![% Listings for Rent](Screenshots/DAX_Measures/10.%25%20Listings%20for%20Rent.png)
 
 ### Ranking
