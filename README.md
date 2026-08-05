@@ -28,39 +28,74 @@ The project was completed in three parts:
  - **Part 5:** Insight and Report
 ---
 
-## 2. Dataset Information
 
-| Detail | Value |
-|---|---|
-| **Dataset Name** | Abu Dhabi & Dubai Real Estate Dataset |
-| **Source File** | `Abu Dhabi n Dubai real estate data set.xlsx` |
-| **Total Rows** | 73,742 property listings |
-| **Total Columns** | 17 columns |
-| **Date Range** | 2024 (based on Posted Date field) |
-| **Coverage** | Dubai (34,250), Abu Dhabi (23,324), Sharjah (9,516), Ajman (4,704), Al Ain (1,040), Ras Al Khaimah (816), Umm Al Quwain (65), Fujairah (27) |
 
-### Original Dataset Columns
+## 2. Dataset Source
 
-| Column | Description |
-|---|---|
+The dataset used in this project was obtained from Kaggle and contains rental property listings from the Dubai real estate market. It provides detailed information about residential rental properties, including pricing, property characteristics, furnishing status, geographic location, and listing metadata.
+
+**Dataset Name**
+
+Real Estate Goldmine – Dubai UAE Rental Market
+
+**Original Source**
+
+https://www.kaggle.com/datasets/azharsaleem/real-estate-goldmine-dubai-uae-rental-market
+
+**Data Provider**
+
+Kaggle
+
+---
+
+## Dataset Description
+
+The dataset contains **73,743 residential rental property listings** with **17 attributes** describing rental prices, property specifications, locations, and other market characteristics. The data serves as the primary fact table for the Business Intelligence solution, while additional dimension tables were created during the Power BI data modelling process to implement a Star Schema.
+
+### Dataset Summary
+
+| Item | Value |
+|------|-------|
+| Dataset Name | Real Estate Goldmine – Dubai UAE Rental Market |
+| Industry | Dubai Real Estate Rental Market |
+| Rows | 73,743 |
+| Columns | 17 |
+| Tables | 1 (transformed into a Star Schema using dimension tables in Power BI) |
+
+### Dataset Variables
+
+| Variable | Description |
+|-----------|-------------|
 | Address | Full property address |
-| Rent | Annual/monthly rental price |
+| Rent | Rental price of the property |
 | Beds | Number of bedrooms |
 | Baths | Number of bathrooms |
-| Type | Property type (Apartment, Villa, Townhouse, etc.) |
-| Area_in_sqft | Property size in square feet |
-| Rent_per_sqft | Rent divided by area |
-| Rent_category | Categorical rent classification |
-| Frequency | Payment frequency (Yearly/Monthly) |
-| Furnishing | Furnishing status (Furnished/Semi-Furnished/Unfurnished) |
+| Property Type | Category of property (Apartment, Villa, Townhouse, etc.) |
+| Area | Property size in square feet |
+| Rent per Sqft | Rental price per square foot |
+| Furnishing | Furnishing status of the property |
+| Frequency | Rental payment frequency (Monthly/Yearly) |
 | Purpose | Listing purpose (For Rent) |
-| Posted_date | Date the listing was posted |
-| Age_of_listing_in_days | Number of days the listing has been active |
-| Location | Specific neighborhood/district |
-| City | City (Dubai, Abu Dhabi, Sharjah, etc.) |
-| Latitude | Geographic coordinate |
-| Longitude | Geographic coordinate |
+| Posted Date | Date when the property listing was posted |
+| Location | Neighborhood or locality |
+| City | City where the property is located |
+| Latitude | Geographic latitude |
+| Longitude | Geographic longitude |
 
+### Data Modelling Approach
+
+The original dataset consisted of a single table. During data preparation, the dataset was transformed into a **Star Schema** by creating dimension tables for:
+
+- Date
+- Property Type
+- Furnishing
+- Location
+- Frequency
+- Purpose
+
+These dimension tables were linked to the central **FactProperty** table to improve query performance, simplify analysis, and support interactive reporting in Power BI.
+
+---
 ### Data Quality Notes
 - **Missing values:** Latitude and Longitude have 719 null values (approximately 1% of rows)  handled during cleaning; these are only used for map visualizations and do not affect other measures
 - **No duplicate full rows**  confirmed via Remove Duplicates in Power Query
